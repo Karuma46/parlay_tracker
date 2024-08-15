@@ -32,3 +32,6 @@ class UserToken(Base):
   created_at = Column(DateTime, default=datetime.now())
   expiration = Column(DateTime, default=datetime.now() + timedelta(days=30))
   user = relationship("User", back_populates="tokens")
+
+  def is_valid(self):
+    return self.expiration > datetime.now()

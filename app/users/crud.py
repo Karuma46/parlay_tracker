@@ -4,7 +4,7 @@ import hashlib
 from typing import Union
 
 def get_user(db:Session, userId: int):
-  db.query(models.User).filter(models.User.id == userId).first()
+  return db.query(models.User).filter(models.User.id == userId).first()
 
 def get_users(db: Session,):
   return db.query(models.User).all()
