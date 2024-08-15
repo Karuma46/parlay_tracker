@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Request, Response
 from .app.users.router import router as userRouter
+from .app.teams.router import router as teamRouter
 from .app.middleware.auth_middleware import authorize
 
 app = FastAPI()
@@ -22,6 +23,7 @@ async def auth_middleware(request: Request, call_next):
 
 
 app.include_router(userRouter)
+app.include_router(teamRouter)
 
 @app.get("/")
 def read_root():
