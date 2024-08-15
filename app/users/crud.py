@@ -32,5 +32,9 @@ def user_login(db: Session, user: schemas.UserLogin):
     return 'User not found'
   else:
     if db_user.password == hashlib.sha256(user.password.encode('utf-8')).hexdigest():
-      return db_user
+      db_user_token = models.UserToken(user_id=db_user.id)
+      db.add(db_user_token)
+      db.commit()
+      db.refresh(db_user_token)
+      return db_user_token
     return 'Wrong Password'

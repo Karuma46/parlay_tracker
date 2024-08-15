@@ -22,3 +22,7 @@ class UserUpdatePassword(BaseModel):
 class UserLogin(BaseModel):
   username: str
   password: str
+
+class UserToken(BaseModel):
+  user_id: int
+  token: str
