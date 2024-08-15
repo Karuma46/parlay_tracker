@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, Response
+from fastapi import APIRouter, Depends, Response, Request
 from ..database import SessionLocal
 # from ..dependencies import get_token_header
 from ..users import crud, schemas
@@ -31,6 +31,10 @@ async def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
 @router.post("/login")
 async def user_login(user: schemas.UserLogin, db: Session = Depends(get_db)):
     return crud.user_login(db, user)
+
+@router.post("/logout")
+async def user_logout(request: Request, db: Session = Depends(get_db)):
+    return crud.user_logout(db, request.headers.get('Authorization'))
 
 @router.get("/{user_id}")
 async def get_user(user_id: Union[str, int], db: Session = Depends(get_db)):

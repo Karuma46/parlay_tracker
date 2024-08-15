@@ -38,3 +38,9 @@ def user_login(db: Session, user: schemas.UserLogin):
       db.refresh(db_user_token)
       return db_user_token
     return 'Wrong Password'
+
+def user_logout(db: Session, token: str):
+  db_user_token = db.query(models.UserToken).filter(models.UserToken.token == token).first()
+  db.delete(db_user_token)
+  db.commit()
+  return True
