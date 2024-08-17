@@ -1,12 +1,15 @@
 from fastapi import FastAPI, Request, Response
 from .app.users.router import router as userRouter
 from .app.teams.router import router as teamRouter
+from .app.parlays.router import router as parlayRouter
 from .app.middleware.auth_middleware import authorize
 
 app = FastAPI()
 
 excluded_urls = [
     '/users/login',
+    '/users/add',
+    '/users/update_password'
 ]
 
 @app.middleware("http")
@@ -24,6 +27,7 @@ async def auth_middleware(request: Request, call_next):
 
 app.include_router(userRouter)
 app.include_router(teamRouter)
+app.include_router(parlayRouter)
 
 @app.get("/")
 def read_root():
