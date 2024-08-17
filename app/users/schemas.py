@@ -17,6 +17,7 @@ class User(UserBase):
     from_attributes = True
 
 class UserUpdatePassword(BaseModel):
+  id: int
   password: str
 
 class UserLogin(BaseModel):

@@ -40,6 +40,6 @@ async def user_logout(request: Request, db: Session = Depends(get_db)):
 async def get_user(user_id: Union[str, int], db: Session = Depends(get_db)):
     return crud.get_user_by_id(db, user_id)
 
-@router.post("/{user_id}/update_password")
-async def update_password(user_id: int, password: schemas.UserUpdatePassword, db: Session = Depends(get_db)):
-    return crud.update_password(db, user_id, password)
+@router.post("/update_password")
+async def update_password(user: schemas.UserUpdatePassword, db: Session = Depends(get_db)):
+    return crud.update_password(db, user)

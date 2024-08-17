@@ -19,9 +19,9 @@ def create_user(db: Session, user: schemas.UserCreate):
   db.refresh(db_user)
   return db_user
 
-def update_password(db: Session, userId: int, password: schemas.UserUpdatePassword):
-  db_user = db.query(models.User).filter(models.User.id == userId).first()
-  db_user.password = hashlib.sha256(password.password.encode('utf-8')).hexdigest()
+def update_password(db: Session, user: schemas.UserUpdatePassword):
+  db_user = db.query(models.User).filter(models.User.id == user.id).first()
+  db_user.password = hashlib.sha256(user.password.encode('utf-8')).hexdigest()
   db.commit()
   db.refresh(db_user)
   return db_user
