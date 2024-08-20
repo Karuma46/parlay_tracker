@@ -4,23 +4,14 @@ from datetime import datetime
 from sqlalchemy.orm import relationship
 from ..teams.models import Team
 
-
-class ParlayType(Base):
-  __tablename__ = "parlay_types"
-
-  id = Column(Integer, primary_key=True, index=True)
-  name = Column(String)
-  outcome = Column(Integer)
-  spread = Column(Integer)
-
 class Parlay(Base):
   __tablename__ = "parlays"
 
   id = Column(Integer, primary_key=True, index=True)
   name = Column(String)
   description = Column(String)
-  type = Column(Integer, ForeignKey("parlay_types.id"))
-
+  outcome = Column(Integer)
+  spread = Column(Integer)
 
 class ParlayTeam(Base):
   __tablename__ = "parlay_teams"

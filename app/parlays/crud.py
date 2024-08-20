@@ -1,56 +1,6 @@
 from sqlalchemy.orm import Session
 from . import models, schemas
 
-def create_option(db: Session, option: schemas.Option):
-  db_option = models.Option(**option.model_dump())
-  db.add(db_option)
-  db.commit()
-  db.refresh(db_option)
-  return db_option
-
-def get_options(db: Session):
-  return db.query(models.Option).all()
-
-def get_option_by_id(db: Session, option_id: int):
-  return db.query(models.Option).filter(models.Option.id == option_id).first()
-
-
-def create_parlay_type(db: Session, parlay_type: schemas.ParlayType):
-  db_parlay_type = models.ParlayType(**parlay_type.model_dump())
-  db.add(db_parlay_type)
-  db.commit()
-  db.refresh(db_parlay_type)
-  return db_parlay_type
-
-def update_parlay_type(db: Session, parlay_type_id: int, parlay_type: schemas.ParlayType):
-  db_parlay_type = db.query(models.ParlayType).filter(models.ParlayType.id == parlay_type_id).first()
-  db_parlay_type.name = parlay_type.name
-  db_parlay_type.outcome = parlay_type.outcome
-  db.commit()
-  db.refresh(db_parlay_type)
-  return db_parlay_type
-
-def get_parlay_types(db: Session):
-  return db.query(models.ParlayType).all()
-
-def get_parlay_types_by_id(db: Session, parlay_type_id: int):
-  return db.query(models.ParlayType).filter(models.ParlayType.id == parlay_type_id).first()
-
-
-def create_parlay_type_option(db: Session, parlay_type_option: schemas.ParlayTypeOption):
-  db_parlay_type_option = models.ParlayTypeOption(**parlay_type_option.model_dump())
-  db.add(db_parlay_type_option)
-  db.commit()
-  db.refresh(db_parlay_type_option)
-  return db_parlay_type_option
-
-def get_parlay_type_options(db: Session):
-  return db.query(models.ParlayTypeOption).all()
-
-def get_parlay_type_options_by_id(db: Session, parlay_type_option_id: int):
-  return db.query(models.ParlayTypeOption).filter(models.ParlayTypeOption.id == parlay_type_option_id).first()
-
-
 def create_parlay(db: Session, parlay: schemas.Parlay):
   db_parlay = models.Parlay(**parlay.model_dump())
   db.add(db_parlay)

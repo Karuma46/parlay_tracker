@@ -22,47 +22,6 @@ async def create_parlay(parlay: schemas.Parlay, db: Session = Depends(get_db)):
 async def get_parlay_by_id(parlay_id: int, db: Session = Depends(get_db)):
   return crud.get_parlay_by_id(db, parlay_id)
 
-@router.post("/options/add")
-async def create_option(option: schemas.Option, db: Session = Depends(get_db)):
-  return crud.create_option(db, option)
-
-@router.get("/options/list")
-async def get_options(db: Session = Depends(get_db)):
-  return crud.get_options(db)
-
-@router.get("/options/{option_id}")
-async def get_option_by_id(option_id: int, db: Session = Depends(get_db)):
-  return crud.get_option_by_id(db, option_id)
-
-# crud routes for parlaytype
-@router.post("/parlay_type/add")
-async def create_parlay_type(parlay_type: schemas.ParlayType, db: Session = Depends(get_db)):
-  return crud.create_parlay_type(db, parlay_type)
-
-@router.get("/parlay_type/list")
-async def get_parlay_types(db: Session = Depends(get_db)):
-  return crud.get_parlay_types(db)
-
-@router.get("/parlay_type/{parlaytype_id}")
-async def get_parlay_type_by_id(parlaytype_id: int, db: Session = Depends(get_db)):
-  return crud.get_parlay_types_by_id(db, parlaytype_id)
-
-@router.put("/parlay_type/{parlay_type_id}")
-async def update_parlay_type(parlay_type_id: int, parlay_type: schemas.ParlayType, db: Session = Depends(get_db)):
-  return crud.update_parlay_type(db, parlay_type_id, parlay_type)
-
-@router.get("/parlay_type_options/list")
-async def get_parlay_type_options(db: Session = Depends(get_db)):
-  return crud.get_parlay_type_options(db)
-
-@router.get("/parlay_type_options/{parlay_type_option_id}")
-async def get_parlay_type_option_by_id(parlay_type_option_id: int, db: Session = Depends(get_db)):
-  return crud.get_parlay_type_option_by_id(db, parlay_type_option_id)
-
-@router.post("/parlay_type_options/add")
-async def create_parlay_type_option(parlay_type_option: schemas.ParlayTypeOption, db: Session = Depends(get_db)):
-  return crud.create_parlay_type_option(db, parlay_type_option)
-
 @router.post("/parlay_week/add")
 async def create_parlay_week(parlay_week: schemas.ParlayWeek, db: Session = Depends(get_db)):
   return crud.create_parlay_week(db, parlay_week)
