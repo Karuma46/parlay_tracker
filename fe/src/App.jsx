@@ -1,7 +1,7 @@
 function App() {
   return (
     <>
-      <h1>Parlay Tracker</h1>
+      <h1 className="text-3xl font-bold underline">Parlay Tracker</h1>
     </>
   );
 }
