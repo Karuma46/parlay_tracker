@@ -1,8 +1,7 @@
 from logging.config import fileConfig
 
-from sqlalchemy import engine_from_config
+from sqlalchemy import engine_from_config, MetaData
 from sqlalchemy import pool
-
 from alembic import context
 
 # this is the Alembic Config object, which provides
@@ -18,7 +17,10 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-from app.parlays.models import Base
+from app.users.models import Base
+from app.parlays.models import Base as ParlayBase
+from app.teams.models import Base as TeamBase
+
 target_metadata = Base.metadata
 
 # other values from the config, defined by the needs of env.py,
