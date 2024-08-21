@@ -6,9 +6,11 @@ import "./index.css";
 import { AuthContextProvider } from "./auth/authContext.jsx";
 
 createRoot(document.getElementById("root")).render(
-  <AuthContextProvider>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </AuthContextProvider>
+  <StrictMode>
+    <AuthContextProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </AuthContextProvider>
+  </StrictMode>
 );
