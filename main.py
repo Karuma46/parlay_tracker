@@ -1,28 +1,28 @@
-from fastapi import FastAPI, Request, Response
+from fastapi import FastAPI
 from .app.users.router import router as userRouter
 from .app.teams.router import router as teamRouter
 from .app.parlays.router import router as parlayRouter
-from .app.middleware.auth_middleware import authorize
+from .app.middleware.auth_middleware import AuthMiddleware
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
-excluded_urls = [
-    '/users/login',
-    '/users/add',
-    '/users/update_password'
+origins = [
+    "http://127.0.0.1:5173",
+    "http://127.0.0.1",
+    "http://localhost:5173",
+    "http://localhost",
 ]
 
-@app.middleware("http")
-async def auth_middleware(request: Request, call_next):
-    if(request.url.path in excluded_urls):
-        return await call_next(request)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+    allow_credentials=True,
+)
 
-    if not await authorize(request.headers):
-        return Response("Unauthorized", status_code=401)
-    else:
-        response = await call_next(request)
-        print(response)
-        return response
+app.add_middleware(AuthMiddleware)
 
 
 app.include_router(userRouter)

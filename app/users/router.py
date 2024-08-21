@@ -28,13 +28,17 @@ async def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     db_user = crud.create_user(db, user)
     return db_user
 
-@router.post("/login")
+@router.post("/login/")
 async def user_login(user: schemas.UserLogin, db: Session = Depends(get_db)):
     return crud.user_login(db, user)
 
 @router.post("/logout")
 async def user_logout(request: Request, db: Session = Depends(get_db)):
     return crud.user_logout(db, request.headers.get('Authorization'))
+
+@router.get("/me")
+async def get_me(request: Request, db: Session = Depends(get_db)):
+    return crud.get_authenticated_user(db, request.headers.get('Authorization'))
 
 @router.get("/{user_id}")
 async def get_user(user_id: Union[str, int], db: Session = Depends(get_db)):
