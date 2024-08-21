@@ -1,7 +1,8 @@
 import { Route, Routes, useNavigate } from "react-router-dom";
 import Login from "./auth/login";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { AuthContext, AuthContextProvider } from "./auth/authContext";
+import Home from "./home";
 
 function App() {
   const { isAuthed, authed } = useContext(AuthContext);
@@ -24,7 +25,8 @@ function App() {
     <>
       <AuthContextProvider>
         <Routes>
-          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Home />} />
+          <Route exact path="/login" element={<Login />} />
         </Routes>
       </AuthContextProvider>
     </>

@@ -22,6 +22,7 @@ const Api = () => {
     notifications: setUrl("/notifications/list"),
     clients: setUrl("/notifications/clients"),
     users: setUrl("/users/list"),
+    parlays: setUrl("/parlays/list"),
   };
 };
 
