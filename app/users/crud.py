@@ -2,6 +2,7 @@ from sqlalchemy.orm import Session
 from . import models, schemas
 import hashlib
 from typing import Union
+from datetime import datetime
 
 def get_user(db:Session, userId: int):
   return db.query(models.User).filter(models.User.id == userId).first()
@@ -44,3 +45,12 @@ def user_logout(db: Session, token: str):
   db.delete(db_user_token)
   db.commit()
   return True
+
+def get_authenticated_user(db: Session, token: str):
+  db_user_token = db.query(models.UserToken).filter(models.UserToken.token == token).first()
+  if db_user_token.expiration > datetime.now():
+    db_user = db.query(models.User).filter(models.User.id == db_user_token.user_id).first()
+    if db_user:
+      return db_user
+    return None
+  return None
