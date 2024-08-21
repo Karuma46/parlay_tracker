@@ -62,7 +62,7 @@ const useAuthContext = () => {
         return res.data;
       })
       .catch(() => {
-        localStorage.removeItem("access_token");
+        // localStorage.removeItem("access_token");
         setLoading(false);
         return false;
       });
