@@ -13,6 +13,7 @@ excluded_urls = [
 
 class AuthMiddleware(BaseHTTPMiddleware):
   async def authorize(self, headers: list, db:Session = SessionLocal()):
+    print(headers)
     if headers.get('Authorization'):
       token = headers['Authorization']
       db_user_token = db.query(UserToken).filter(UserToken.token == token).first()

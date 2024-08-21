@@ -13,6 +13,7 @@ origins = [
     "http://localhost:5173",
     "http://localhost",
 ]
+app.add_middleware(AuthMiddleware)
 
 app.add_middleware(
     CORSMiddleware,
@@ -23,7 +24,6 @@ app.add_middleware(
     allow_credentials=True,
 )
 
-app.add_middleware(AuthMiddleware)
 
 
 app.include_router(userRouter)
