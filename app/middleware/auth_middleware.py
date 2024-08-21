@@ -13,7 +13,6 @@ excluded_urls = [
 
 class AuthMiddleware(BaseHTTPMiddleware):
   async def authorize(self, headers: list, db:Session = SessionLocal()):
-    print(headers)
     if headers.get('Authorization'):
       token = headers['Authorization']
       db_user_token = db.query(UserToken).filter(UserToken.token == token).first()
@@ -24,13 +23,11 @@ class AuthMiddleware(BaseHTTPMiddleware):
     return False
 
   async def dispatch(self, request: Request, call_next):
-    print(request.url.path)
     if request.url.path in excluded_urls:
         return await call_next(request)
     else:
       if await self.authorize(request.headers):
           response = await call_next(request)
-          print(response)
           return response
       else:
           return Response("Unauthorized", status_code=401)

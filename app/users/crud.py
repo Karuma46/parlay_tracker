@@ -2,7 +2,7 @@ from sqlalchemy.orm import Session
 from . import models, schemas
 import hashlib
 from typing import Union
-from datetime import datetime
+from datetime import datetime, timedelta
 
 def get_user(db:Session, userId: int):
   return db.query(models.User).filter(models.User.id == userId).first()
@@ -33,10 +33,17 @@ def user_login(db: Session, user: schemas.UserLogin):
     return 'User not found'
   else:
     if db_user.password == hashlib.sha256(user.password.encode('utf-8')).hexdigest():
-      db_user_token = models.UserToken(user_id=db_user.id)
-      db.add(db_user_token)
-      db.commit()
-      db.refresh(db_user_token)
+      db_user_token = db.query(models.UserToken).filter(models.UserToken.user_id == db_user.id).first()
+      if db_user_token:
+        db_user_token.expiration = datetime.now() + timedelta(hours=24)
+        db.commit()
+        db.refresh(db_user_token)
+        return db_user_token
+      else:
+        db_user_token = models.UserToken(user_id=db_user.id)
+        db.add(db_user_token)
+        db.commit()
+        db.refresh(db_user_token)
       return db_user_token
     return 'Wrong Password'
 

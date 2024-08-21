@@ -36,7 +36,7 @@ async def user_login(user: schemas.UserLogin, db: Session = Depends(get_db)):
 async def user_logout(request: Request, db: Session = Depends(get_db)):
     return crud.user_logout(db, request.headers.get('Authorization'))
 
-@router.get("/me")
+@router.get("/me/")
 async def get_me(request: Request, db: Session = Depends(get_db)):
     return crud.get_authenticated_user(db, request.headers.get('Authorization'))
 
